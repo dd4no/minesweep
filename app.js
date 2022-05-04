@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Variables
     const grid = document.querySelector('.grid');
     let width = 10;
     let squares = [];
@@ -23,9 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
             square.classList.add(randomArray[i]);
             grid.appendChild(square);
             squares.push(square);
+
+            // Check for Click Event
+            square.addEventListener('click', function(e){
+                chooseSquare(square);
+            })
         }
 
-        // Add Numbers
+        // Count Surrounding Bombs
         for (let i=0; i<squares.length; i++) {
             const isLeftEdge = (i % width === 0);
             const isRightEdge = (i % width === width - 1);
@@ -41,11 +48,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i<88 && !isRightEdge && squares[i+1+width].classList.contains('bomb')) total ++;
                 if (i<89 && squares[i+width].classList.contains('bomb')) total ++;
                 squares[i].setAttribute('data', total)
-                console.log(squares[i]);
             }
         }
 
 
     }
     createBoard();
+
+    // Square Choice Actions
+    function chooseSquare(square) {
+        if (square.classList.contains('bomb')) {
+            console.log('Game Over');
+        }
+        else {
+            let total = square.getAttribute('data');
+            if (total !=0) {
+                square.classList.add('checked');
+                square.innerHTML = total;
+                return;
+            }
+            else {
+                square.classList.add('checked');
+            }
+        }
+    }
 })
