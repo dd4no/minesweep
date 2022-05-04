@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Check for Bomb
         if (square.classList.contains('bomb')) {
-           gameOver(square);
+            gameOver(square);
         }
         //Check for Safe with Surrounding Bombs
         else {
@@ -127,11 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newSquare = document.getElementById(newNumber);
                 chooseSquare(newSquare);
             }
-        }, 10);        
+        }, 10);
+        
     }
 
     function gameOver(square) {
         isGameOver = true;
+        console.log('Game Over');
         squares.forEach(square => {
             if (square.classList.contains('bomb')) {
                 square.innerHTML = '*';
