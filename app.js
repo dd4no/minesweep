@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let width = 10;
     let squares = [];
     let numberBombs = 20;
+    let isGameOver = false;
 
     // Create Game Board
     function createBoard(){
@@ -57,9 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Square Choice Actions
     function chooseSquare(square) {
+        // Check for previous clicks
+        if (isGameOver) return;
+        if (square.classList.contains('checked') || square.classList.contains('flag')) return;
+
+        // Check for Bomb
         if (square.classList.contains('bomb')) {
+            isGameOver = true;
             console.log('Game Over');
         }
+        //Check for Safe with Surrounding Bombs
         else {
             let total = square.getAttribute('data');
             if (total !=0) {
