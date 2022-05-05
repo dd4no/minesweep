@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let width = 10;
     let squares = [];
     let numberBombs = 20;
+    let flags = 0;
     let isGameOver = false;
 
     // Create Game Board
@@ -27,10 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
             grid.appendChild(square);
             squares.push(square);
 
-            // Check for Click Event
+            // Check for Normal Click
             square.addEventListener('click', function(e){
                 chooseSquare(square);
             })
+
+            // Check for Right Click
+            square.oncontextmenu = function(e) {
+                e.preventDefault();
+                addFlag(square);
+            }
         }
 
         // Count Surrounding Bombs
@@ -40,14 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
             let total = 0;
             
             if (squares[i].classList.contains('safe')){
-                if (i>0 && !isLeftEdge && squares[i-1].classList.contains('bomb')) total ++;
-                if (i>9 && !isRightEdge && squares[i+1-width].classList.contains('bomb')) total ++;
+                if (i>0 && !isLeftEdge && squares[i-1].classList.contains('bomb')) total++;
+                if (i>9 && !isRightEdge && squares[i+1-width].classList.contains('bomb')) total++;
                 if (i>10 && squares[i-width].classList.contains('bomb')) total ++;
-                if (i>11 && !isLeftEdge && squares[i-1-width].classList.contains('bomb')) total ++;
-                if (i<98 && !isRightEdge && squares[i+1].classList.contains('bomb')) total ++;
-                if (i<90 && !isLeftEdge && squares[i-1+width].classList.contains('bomb')) total ++;
-                if (i<88 && !isRightEdge && squares[i+1+width].classList.contains('bomb')) total ++;
-                if (i<89 && squares[i+width].classList.contains('bomb')) total ++;
+                if (i>11 && !isLeftEdge && squares[i-1-width].classList.contains('bomb')) total++;
+                if (i<98 && !isRightEdge && squares[i+1].classList.contains('bomb')) total++;
+                if (i<90 && !isLeftEdge && squares[i-1+width].classList.contains('bomb')) total++;
+                if (i<88 && !isRightEdge && squares[i+1+width].classList.contains('bomb')) total++;
+                if (i<89 && squares[i+width].classList.contains('bomb')) total++;
                 squares[i].setAttribute('data', total)
             }
         }
@@ -136,9 +143,25 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Game Over');
         squares.forEach(square => {
             if (square.classList.contains('bomb')) {
-                square.innerHTML = '*';
+                square.innerHTML = '💣';
             }
         })
 
+    }
+
+    function addFlag(square) {
+        if (isGameOver) return;
+        if (!square.classList.contains('checked') && (flags < numberBombs)) {
+            if (!square.classList.contains('flag')) {
+                square.classList.add('flag');
+                square.innerHTML = '🚩';
+                flags++;
+            }
+            else {
+                square.classList.remove('flag');
+                square.innerHTML = '';
+                flags--
+            }
+        }
     }
 })
