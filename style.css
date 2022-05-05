@@ -8,14 +8,15 @@
 }
 
 .grid div {
-    height: 40px;
-    width: 40px;
+    height: 38px;
+    width: 38px;
+    border: 1px solid black;
 }
 
 .checked {
     background-color: yellow;
 }
 
-.bomb {
+/*.bomb {
     background-color: red;
-}
+}*/
