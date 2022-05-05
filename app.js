@@ -174,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (matches === numberBombs) {
                 console.log('You Win!!');
+                isGameOver = true;
             }
         }
     }

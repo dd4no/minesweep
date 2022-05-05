@@ -11,6 +11,10 @@
     height: 38px;
     width: 38px;
     border: 1px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    text-align: center;
+    /* align-items: center; */
 }
 
 .checked {
